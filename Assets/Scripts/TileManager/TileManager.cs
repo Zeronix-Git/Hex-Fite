@@ -32,9 +32,27 @@ public class TileManager : MonoBehaviour {
             Vector3Int gridPos = terrainBase.WorldToCell(mousePos);
 
             TileBase clickedTerrainBase = terrainBase.GetTile(gridPos);
+            TileBase clickedTerrainModifier = terrainModifier.GetTile(gridPos);
 
-            print("At pos " + gridPos + ", terrain base is " + terrainDataLookupDict[clickedTerrainBase].getName() + " with a foot " +
-                "movement cost of " + terrainDataLookupDict[clickedTerrainBase].getMovementCost(MovementType.Foot));
+            string nameToPrint = terrainDataLookupDict[clickedTerrainBase].getName();
+            int movementCostToPrint = terrainDataLookupDict[clickedTerrainBase].getMovementCost(MovementType.Foot);
+
+            if(clickedTerrainModifier != null) {
+                switch (terrainDataLookupDict[clickedTerrainModifier].getTerrainModifierMovementCostCalculationType()) {
+                    case TerrainModifierCalculationType.None:
+                        break;
+                    case TerrainModifierCalculationType.Add:
+                        movementCostToPrint += terrainDataLookupDict[clickedTerrainModifier].getMovementCost(MovementType.Foot);
+                        break;
+                    case TerrainModifierCalculationType.Replace:
+                        movementCostToPrint = terrainDataLookupDict[clickedTerrainModifier].getMovementCost(MovementType.Foot);
+                        break;
+                }
+                nameToPrint = terrainDataLookupDict[clickedTerrainModifier].getName();
+            }
+
+
+            print("At pos " + gridPos + ", terrain base is " + nameToPrint + " with a foot movement cost of " + movementCostToPrint);
         }
     }
 }

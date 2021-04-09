@@ -20,6 +20,18 @@ public class Terrain {
         return terrainData.income;
     }
 
+    public bool isTerrainMoidfier() {
+        return terrainData.isTerranModifier;
+    }
+
+    public TerrainModifierCalculationType getTerrainModifierDenfenseModifierCalculationType() {
+        return terrainData.overrideBaseTerrainDefModifier;
+    }
+
+    public TerrainModifierCalculationType getTerrainModifierMovementCostCalculationType() {
+        return terrainData.overrideBaseTerrainMovementCosts;
+    }
+
     public int getMovementCost(MovementType  movementType) {
         //Caching movementCost from terrainData
         if (movementCost == null) {

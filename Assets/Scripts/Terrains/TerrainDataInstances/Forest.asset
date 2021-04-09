@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512a3f2f6058acb4e8fb1b6eb701cab8, type: 3}
+  m_Name: Forest
+  m_EditorClassIdentifier: 
+  name: Forest
+  defModifier:
+  - defenseType: 0
+    defenseModifier: 1
+  - defenseType: 1
+    defenseModifier: 3
+  - defenseType: 2
+    defenseModifier: 2
+  movementCosts:
+  - movementType: 0
+    movementCost: 2
+  - movementType: 1
+    movementCost: 3
+  - movementType: 2
+    movementCost: 4
+  income: 0
+  tileBases:
+  - {fileID: 11400000, guid: 492b3048b41bfb24bb0aac650642bf2d, type: 2}
+  isTerranModifier: 1
+  overrideBaseTerrainDefModifier: 1
+  overrideBaseTerrainMovementCosts: 1

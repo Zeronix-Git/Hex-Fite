@@ -10,4 +10,7 @@ public class TerrainData : ScriptableObject {
     public List<MovementCost> movementCosts;
     public int income;
     public TileBase[] tileBases;
+    public bool isTerranModifier;
+    public TerrainModifierCalculationType overrideBaseTerrainDefModifier;
+    public TerrainModifierCalculationType overrideBaseTerrainMovementCosts;
 }
