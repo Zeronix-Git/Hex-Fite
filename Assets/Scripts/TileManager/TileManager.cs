@@ -5,11 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour {
     [SerializeField]
-    public Tilemap terrainBase;
+    private Tilemap terrainBase;
     [SerializeField]
-    public Tilemap terrainModifier;
+    private Tilemap terrainModifier;
     [SerializeField]
-    public Tilemap unit;
+    private Tilemap unit;
     [SerializeField]
     private List<TerrainData> terrainDatas;
 
