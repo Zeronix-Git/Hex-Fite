@@ -44,7 +44,7 @@ public class TileManager : MonoBehaviour {
         oddRowNeighbourOffsets.Add(new Vector3Int(1,1,0));
         oddRowNeighbourOffsets.Add(new Vector3Int(1,-1,0));
         
-        var neighbourOffsets = new List<List<Vector3Int>>()
+        neighbourOffsets = new List<List<Vector3Int>>()
         {
             evenRowNeighbourOffsets, 
             oddRowNeighbourOffsets
