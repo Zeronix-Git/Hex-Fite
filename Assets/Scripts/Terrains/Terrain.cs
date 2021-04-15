@@ -6,7 +6,7 @@ public class Terrain {
     private TerrainData terrainData;
 
     private Dictionary<MovementType, int> movementCost;
-    private Dictionary<DefenseType, int> defenseModifier;
+    private Dictionary<DefenseType, float> defenseModifier;
 
     public Terrain(TerrainData terrainData) {
         this.terrainData = terrainData;
@@ -45,7 +45,7 @@ public class Terrain {
         return retMovementCost;
     }
 
-    public int getDefenseModifier(DefenseType defenseType) {
+    public float getDefenseModifier(DefenseType defenseType) {
         //Caching defenseModifier from terrainData
         if (defenseModifier == null) {
             defenseModifier = terrainData.defModifier.ToDictionary(
@@ -53,7 +53,7 @@ public class Terrain {
                 defenseModifier => defenseModifier.defenseModifier);
         }
 
-        int retTefenseModifier = -1;
+        float retTefenseModifier = -1;
         defenseModifier.TryGetValue(defenseType, out retTefenseModifier);
         return retTefenseModifier;
     }

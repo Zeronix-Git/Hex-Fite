@@ -5,6 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour {
     [SerializeField]
+    private int mapSizeX;
+    [SerializeField]
+    private int mapSizeY;
+    [SerializeField]
     private Tilemap terrainBase;
     [SerializeField]
     private Tilemap terrainModifier;
@@ -12,8 +16,13 @@ public class TileManager : MonoBehaviour {
     private Tilemap unit;
     [SerializeField]
     private List<TerrainData> terrainDatas;
+    [SerializeField]
+    private List<UnitData> unitDatas;
+
+    private Dictionary<Vector3Int, Unit> unitsOnTheMap;
 
     private Dictionary<TileBase, Terrain> terrainDataLookupDict;
+    private Dictionary<TileBase, UnitData> unitDataLookupDict;
     // Unity.Tilemap uses offset coordinates for hexagonal grid
     // Reference: https://www.redblobgames.com/grids/hexagons/
     private List<List<Vector3Int>> neighbourOffsets;
@@ -24,6 +33,27 @@ public class TileManager : MonoBehaviour {
         foreach (var terrainData in terrainDatas) {
             foreach (var tile in terrainData.tileBases) {
                 terrainDataLookupDict.Add(tile, new Terrain(terrainData));
+            }
+        }
+
+        unitDataLookupDict = new Dictionary<TileBase, UnitData>();
+        foreach (var unitData in unitDatas) {
+            foreach (var tile in unitData.tilesBases) {
+                unitDataLookupDict.Add(tile, unitData);
+            }
+        }
+
+        unitsOnTheMap = new Dictionary<Vector3Int, Unit>();
+        //TileBase[] units = unit.GetTilesBlock(unit.cellBounds);
+        for (int i = unit.origin.x; i < unit.size.x;  i++) {
+            for (int j = unit.origin.y; j < unit.size.y; j++) {
+                Vector3Int pos = new Vector3Int(i, j, 0);
+                TileBase actualUnit = unit.GetTile(pos);
+                if (actualUnit != null) {
+                    UnitData data;
+                    unitDataLookupDict.TryGetValue(actualUnit, out data);
+                    unitsOnTheMap.Add(pos, new Unit(data, pos));
+                }
             }
         }
 
@@ -42,8 +72,8 @@ public class TileManager : MonoBehaviour {
         oddRowNeighbourOffsets.Add(new Vector3Int(0,-1,0));
         oddRowNeighbourOffsets.Add(new Vector3Int(1,1,0));
         oddRowNeighbourOffsets.Add(new Vector3Int(1,-1,0));
-        
-        var neighbourOffsets = new List<List<Vector3Int>>()
+
+        neighbourOffsets = new List<List<Vector3Int>>()
         {
             evenRowNeighbourOffsets, 
             oddRowNeighbourOffsets
@@ -53,7 +83,8 @@ public class TileManager : MonoBehaviour {
     private List<Vector3Int> getNeighbour(Vector3Int gridPos) {
 
         var neighbourPositions = new List<Vector3Int>();
-        var rowParity = gridPos[1] % 2; // Unity uses second coordinate to store row  
+        var rowParity = Mathf.Abs(gridPos[1] % 2); // Unity uses second coordinate to store row  
+        print(neighbourOffsets);
         foreach (var offset in neighbourOffsets[rowParity]) {
             neighbourPositions.Add(gridPos + offset);
         }
@@ -80,6 +111,7 @@ public class TileManager : MonoBehaviour {
 
             TileBase clickedTerrainBase = terrainBase.GetTile(gridPos);
             TileBase clickedTerrainModifier = terrainModifier.GetTile(gridPos);
+            TileBase clickedUnit = unit.GetTile(gridPos);
 
             string nameToPrint = terrainDataLookupDict[clickedTerrainBase].getName();
             int movementCostToPrint = terrainDataLookupDict[clickedTerrainBase].getMovementCost(MovementType.Foot);
@@ -98,11 +130,17 @@ public class TileManager : MonoBehaviour {
                 nameToPrint = terrainDataLookupDict[clickedTerrainModifier].getName();
             }
 
+            if (clickedUnit != null) {
+                Unit actualUnit;
+                unitsOnTheMap.TryGetValue(gridPos, out actualUnit);
+                print("At pos " + gridPos + ", the unit is " + actualUnit.getName() + ", and their id is "  + actualUnit.getUnitId());
+            }
 
-            print("At pos " + gridPos + ", terrain base is " + nameToPrint + " with a foot movement cost of " + movementCostToPrint);
+            //print("At pos " + gridPos + ", terrain base is " + nameToPrint + " with a foot movement cost of " + movementCostToPrint);
             //print("At pos " + gridPos + ", neighbours are ");
             //foreach (var neighbourPos in getNeighbour(gridPos)) {
             //    print(neighbourPos);
+            //    terrainBase.SetTile(neighbourPos, terrainDatas[0].tileBases[0]);
             //}
         }
     }
