@@ -104,7 +104,7 @@ public class TileManager : MonoBehaviour {
     private List<Vector3Int> getNeighbour(Vector3Int offsetGridPos) {
 
         var neighbourPositions = new List<Vector3Int>();
-        var rowParity = Mathf.Abs(gridPos[1] % 2); // Unity uses second coordinate to store row  
+        var rowParity = Mathf.Abs(offsetGridPos[1] % 2); // Unity uses second coordinate to store row  
         print(neighbourOffsets);
         foreach (var offset in neighbourOffsets[rowParity]) {
             neighbourPositions.Add(offsetGridPos + offset);
