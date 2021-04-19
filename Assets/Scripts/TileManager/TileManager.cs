@@ -101,7 +101,7 @@ public class TileManager : MonoBehaviour {
         return offsetGridPos;
     }
 
-    private List<Vector3Int> getNeighbour(Vector3Int offsetGridPos) {
+    public List<Vector3Int> getNeighbour(Vector3Int offsetGridPos) {
 
         var neighbourPositions = new List<Vector3Int>();
         var rowParity = Mathf.Abs(offsetGridPos[1] % 2); // Unity uses second coordinate to store row  
@@ -112,7 +112,7 @@ public class TileManager : MonoBehaviour {
         return neighbourPositions;
     }
 
-    private int getDistance(Vector3Int offsetStartPos, Vector3Int offsetEndPos) {
+    public int getDistance(Vector3Int offsetStartPos, Vector3Int offsetEndPos) {
         var cubeStartPos = convertOffsetToCube(offsetStartPos);
         var cubeEndPos = convertOffsetToCube(offsetEndPos);
         return Mathf.Max(
@@ -122,11 +122,11 @@ public class TileManager : MonoBehaviour {
         );
     }
 
-    private void getMovementRange(Vector3Int gridPos, MovementType movementType) {
+    public void getMovementRange(Vector3Int gridPos, MovementType movementType) {
         
     }
 
-    private void getPath() {
+    public void getPath() {
 
     }
 
