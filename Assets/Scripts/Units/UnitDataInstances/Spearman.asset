@@ -28,3 +28,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   tilesBases:
   - {fileID: 11400000, guid: f188d54e95d52834b997e043e95aa025, type: 2}
+  actions:
+  - {fileID: 11400000, guid: f319d2ac55ced1e4f81e1b9bf0c48146, type: 2}
+  - {fileID: 11400000, guid: c50d02bc7df468148babf613eb45f953, type: 2}

@@ -162,6 +162,13 @@ public class TileManager : MonoBehaviour {
                 Unit actualUnit;
                 unitsOnTheMap.TryGetValue(gridPos, out actualUnit);
                 print("At pos " + gridPos + ", the unit is " + actualUnit.getName() + ", and their id is "  + actualUnit.getUnitId());
+                print("The unit have the following actions: ");
+                print(actualUnit.getActions());
+                foreach(Action action in actualUnit.getActions()) {
+                    print(action.getActionName());
+                }
+
+
             }
 
             //print("At pos " + gridPos + ", terrain base is " + nameToPrint + " with a foot movement cost of " + movementCostToPrint);

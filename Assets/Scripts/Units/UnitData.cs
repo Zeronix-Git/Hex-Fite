@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,4 +13,5 @@ public class UnitData : ScriptableObject {
     public int ammo;
     public Sprite sprite;
     public TileBase[] tilesBases;
+    public Action[] actions;
 }
