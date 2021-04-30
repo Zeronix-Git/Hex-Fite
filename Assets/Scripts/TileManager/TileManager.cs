@@ -80,12 +80,12 @@ public class TileManager : MonoBehaviour {
     }
 
     private Vector3Int convertOffsetToCube(Vector3Int offsetGridPos) {
-        var col = offsetGridPos.y;
-        var row = offsetGridPos.x;
+        var col = offsetGridPos.x;
+        var row = offsetGridPos.y;
 
-        var x = col - (row - (row&1)) / 2;
-        var z = row;
-        var y = -x-z;
+        var x = row;
+        var y = col - (row - (row&1)) / 2;
+        var z = -y-x;
         var cubeGridPos = new Vector3Int(x, y, z);
         return cubeGridPos;
     }
@@ -93,11 +93,10 @@ public class TileManager : MonoBehaviour {
     private Vector3Int convertCubeToOffset(Vector3Int cubeGridPos) {
         var x = cubeGridPos.x;
         var y = cubeGridPos.y;
-        var z = cubeGridPos.z;
-        
-        var col = x + (z - (z&1)) / 2;
-        var row = z;
-        var offsetGridPos = new Vector3Int(row, col, 0);
+
+        var col = y + (x - (x&1)) / 2;
+        var row = x;
+        var offsetGridPos = new Vector3Int(col, row, 0);
         return offsetGridPos;
     }
 
@@ -115,6 +114,8 @@ public class TileManager : MonoBehaviour {
     private int getDistance(Vector3Int offsetStartPos, Vector3Int offsetEndPos) {
         var cubeStartPos = convertOffsetToCube(offsetStartPos);
         var cubeEndPos = convertOffsetToCube(offsetEndPos);
+
+        var offset2CubeTest = convertCubeToOffset(cubeStartPos);
         return Mathf.Max(
             Mathf.Abs(cubeStartPos.x - cubeEndPos.x),
             Mathf.Abs(cubeStartPos.y - cubeEndPos.y),
@@ -161,7 +162,9 @@ public class TileManager : MonoBehaviour {
             if (clickedUnit != null) {
                 Unit actualUnit;
                 unitsOnTheMap.TryGetValue(gridPos, out actualUnit);
-                print("At pos " + gridPos + ", the unit is " + actualUnit.getName() + ", and their id is "  + actualUnit.getUnitId());
+                //print("At pos " + gridPos + ", the unit is " + actualUnit.getName() + ", and their id is "  + actualUnit.getUnitId());
+                int distance = getDistance(gridPos, new Vector3Int(0, 0, 0));
+                print(actualUnit.getUnitId() +" Distance from 0,0,0: " + distance);
             }
 
             //print("At pos " + gridPos + ", terrain base is " + nameToPrint + " with a foot movement cost of " + movementCostToPrint);
